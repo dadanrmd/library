@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"library/loggers"
+	"github.com/dadanrmd/library/loggers"
 
 	_ "github.com/joho/godotenv/autoload" //buat jaga2
 	"github.com/spf13/cast"

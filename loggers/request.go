@@ -6,13 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
-	"strings"
 	"time"
-)
-
-var (
-	ListThirdParty = os.Getenv("LIST_THIRD_PARTY")
 )
 
 // RecordThridParty ...
@@ -57,17 +51,9 @@ func RecordThridParty(ctx context.Context, req *http.Request, start time.Time, s
 // RecordThridPartyFailed ...
 func RecordThridPartyFailed(ctx context.Context, req *http.Request, start time.Time, service string, status int, body io.Reader, messages string) context.Context {
 	var (
-		url             = req.Host + req.URL.Path
-		payload         string
-		ThirdPartyAvail bool
+		url     = req.Host + req.URL.Path
+		payload string
 	)
-
-	list3Party := strings.Split(ListThirdParty, ";")
-	for _, thirdParty := range list3Party {
-		if thirdParty == req.Host {
-			ThirdPartyAvail = true
-		}
-	}
 
 	t := time.Since(start)
 	if req == nil {
@@ -97,11 +83,7 @@ func RecordThridPartyFailed(ctx context.Context, req *http.Request, start time.T
 		third.RequestBody = payload
 		third.ExecTime = t.Seconds()
 
-		if ThirdPartyAvail {
-			third.RequestID = v.RequestID
-			// logrus.SetFormatter(UTCFormatter{&logrus.JSONFormatter{}})
-			// logrus.WithField("3Party", &third).Info("apps_3Party")
-		}
+		third.RequestID = v.RequestID
 		v.ThirdParty = append(v.ThirdParty, third)
 
 		ctx = context.WithValue(ctx, logKey, v)

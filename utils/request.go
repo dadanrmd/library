@@ -10,7 +10,7 @@ import (
 	"net/http/httputil"
 	"time"
 
-	"library/loggers"
+	"github.com/dadanrmd/library/loggers"
 
 	"github.com/sony/gobreaker"
 	"github.com/spf13/cast"

@@ -1,4 +1,4 @@
-module library
+module github.com/dadanrmd/library
 
 go 1.17
 

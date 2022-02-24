@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"library/loggers"
-	"library/utils"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/dadanrmd/library/loggers"
+	"github.com/dadanrmd/library/utils"
 
 	"github.com/gin-gonic/gin"
 )
