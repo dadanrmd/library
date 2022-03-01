@@ -14,10 +14,10 @@ import (
 
 //SecureResponse is struct
 type SecureResponse struct {
-	Status     bool        `json:"status"`
-	StatusCode int         `json:"status_code"`
-	Message    string      `json:"message"`
-	Data       interface{} `json:"data"`
+	Status       bool        `json:"status"`
+	ResponseCode int         `json:"response_code"`
+	Message      string      `json:"message"`
+	Data         interface{} `json:"data"`
 }
 
 //recordCode is func record status code
@@ -48,7 +48,7 @@ func BasicResponse(ctx context.Context, w http.ResponseWriter, status bool, code
 	)
 
 	response.Status = status
-	response.StatusCode = code
+	response.ResponseCode = code
 
 	if status {
 		response.Message = message
