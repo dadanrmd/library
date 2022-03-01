@@ -14,10 +14,10 @@ import (
 
 //SecureResponse is struct
 type SecureResponse struct {
-	Status       bool        `json:"status"`
-	StatusCode   int         `json:"status_code"`
-	ErrorMessage string      `json:"error_message"`
-	Data         interface{} `json:"data"`
+	Status     bool        `json:"status"`
+	StatusCode int         `json:"status_code"`
+	Message    string      `json:"message"`
+	Data       interface{} `json:"data"`
 }
 
 //recordCode is func record status code
@@ -41,7 +41,7 @@ func generateResponse(ctx context.Context, w http.ResponseWriter, code int, res 
  * @param	data 	string
  * @return	void
  */
-func BasicResponse(ctx context.Context, w http.ResponseWriter, status bool, code int, rs interface{}) {
+func BasicResponse(ctx context.Context, w http.ResponseWriter, status bool, code int, rs interface{}, message string) {
 	var (
 		response SecureResponse
 		result   string
@@ -51,12 +51,13 @@ func BasicResponse(ctx context.Context, w http.ResponseWriter, status bool, code
 	response.StatusCode = code
 
 	if status {
+		response.Message = message
 		response.Data = rs
 		input, _ := JSONMarshal(rs)
 		result = cast.ToString(input)
 	} else {
-		response.ErrorMessage = rs.(string)
-		result = response.ErrorMessage
+		response.Message = message
+		result = response.Message
 	}
 	// data.Response = result
 	loggers.EndRecord(ctx, result, code)

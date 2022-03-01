@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"net/http"
 	"strconv"
@@ -34,7 +35,7 @@ func getAllEvents(c *gin.Context) {
 	curl(ctx)
 	curl(ctx)
 
-	utils.BasicResponse(ctx, c.Writer, true, http.StatusOK, events)
+	utils.BasicResponse(ctx, c.Writer, true, http.StatusOK, events, "")
 }
 func curl(ctx context.Context) (context.Context, []byte, int, error) {
 	ctx = loggers.Logf(ctx, "hit dati ii ")
@@ -50,7 +51,8 @@ func curl(ctx context.Context) (context.Context, []byte, int, error) {
 		"Accept":       "application/json",
 	}
 	t, _ := strconv.Atoi(timer)
-	// rs.Payload = bytes.NewBuffer(payload)
+	payload := []byte("")
+	rs.Payload = bytes.NewBuffer(payload)
 	rs.Timeout = time.Duration(t) * time.Second
 	return rs.DoRequest(ctx)
 }
