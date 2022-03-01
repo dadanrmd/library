@@ -17,6 +17,7 @@ type SecureResponse struct {
 	Status       bool        `json:"status"`
 	ResponseCode int         `json:"response_code"`
 	Message      string      `json:"message"`
+	Title        string      `json:"title"`
 	Data         interface{} `json:"data"`
 }
 
@@ -56,8 +57,9 @@ func BasicResponse(ctx context.Context, w http.ResponseWriter, status bool, code
 		input, _ := JSONMarshal(rs)
 		result = cast.ToString(input)
 	} else {
+		response.Title = rs.(string)
 		response.Message = message
-		result = response.Message
+		result = response.Title
 	}
 	// data.Response = result
 	loggers.EndRecord(ctx, result, code)
